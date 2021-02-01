@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
     minlength: 8
   },
-  type: {
+  role: {
     type: String,
     required: true,
     trim: true
@@ -38,7 +38,16 @@ const userSchema = new mongoose.Schema({
       ref: 'Course',
       autopopulate: true
     }
+  ],
+  testScores: [
+    {
+      type: Number
+    }
   ]
+},
+{
+  // Assigns createAt and updatedAt fields with a Date type
+  timestamps: true
 });
 
 userSchema.path('email').validate( (email) => {
