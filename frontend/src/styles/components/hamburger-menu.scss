@@ -1,0 +1,56 @@
+/* -------------------------------- 
+  HAMBURGER MENU
+-------------------------------- */
+.hamburger-menu {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 100%;
+  position: relative;
+
+  .nav-toggle {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    span {
+      display: block;
+      width: 1rem;
+      height: 1px;
+      margin: 3px;
+      background-color: var(--border-color);
+      user-select: none;
+    }
+  }
+
+  &--close {
+    border: 2px solid var(--white);
+    width: 64px;
+    height: 64px;
+    position: fixed;
+    right: 0;
+    margin-right: 5vw;
+    margin-top: var(--space-unit);
+    
+    .nav-toggle {
+      span {
+        height: 2px;
+        width: 36px;
+        background-color: var(--white);
+
+        &:first-child {
+          transform-origin: center;
+          transform: translate(0, 5px) rotate(45deg);
+        }
+        &:nth-child(2) {
+          opacity: 0;
+        }
+        &:last-child {
+          transform-origin: center;
+          transform: translate(0, -5px) rotate(-45deg);
+        }
+      }
+    }
+  }
+}

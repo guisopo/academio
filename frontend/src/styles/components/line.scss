@@ -1,0 +1,16 @@
+/* -------------------------------- 
+  LINE
+-------------------------------- */
+.line {
+  height: 4px;
+  width: 77.5vw;
+  background-color: var(--border-color);
+  
+  &--full {
+    width: 100%;
+  }
+
+  &--white {
+    background-color: var(--white);
+  }
+}

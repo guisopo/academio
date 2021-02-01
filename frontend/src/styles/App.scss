@@ -1,0 +1,31 @@
+// BASE
+@import './base/reset.scss';
+@import './base/typography.scss';
+@import './base/colors.scss';
+@import './base/spacing.scss';
+@import './base/mixins.scss';
+@import './base/images.scss';
+
+// COMPONENTS
+@import './components/logo.scss';
+@import './components/button.scss';
+@import './components/card.scss';
+@import './components/navigation.scss';
+@import './components/hamburger-menu.scss';
+@import './components/line.scss';
+@import './components/testimonial.scss';
+@import './components/bullet.scss';
+@import './components/list.scss';
+@import './components/notification.scss';
+@import './components/progress-bar.scss';
+
+// LAYOUT
+@import './layout/header.scss';
+@import './layout/main.scss';
+@import './layout/form.scss';
+
+// PAGES
+@import './pages/home.scss';
+@import './pages/curso.scss';
+@import './pages/asignatura.scss';
+@import './pages/test.scss';

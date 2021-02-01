@@ -1,0 +1,55 @@
+/* -------------------------------- 
+  SPACING
+-------------------------------- */
+:root {
+  --space-unit: calc(1rem/2);
+  --space-lg: calc(var(--space-unit) * 9);  // 72px
+  --space-m: calc(var(--space-unit) * 5);   // 50px
+  --space-s: calc(var(--space-unit) * 3);   // 24px
+  --space-xs: calc(var(--space-unit) * 2);  // 16px
+}
+
+p {
+  // padding-top: var(--space-s);
+}
+
+.main-title {
+  padding: var(--space-m) 0;
+
+  &--BC {
+    padding-top: var(--space-xs);
+  }
+}
+
+.breadcrum {
+  display: block;
+  padding-top: var(--space-xs);
+}
+
+.list-section__title, .list__item {
+  padding-bottom: var(--space-xs);
+}
+
+.information__item:not(:last-of-type) {
+  padding-bottom: var(--space-unit);
+}
+
+.line {
+  margin-bottom: calc(var(--space-unit)/4);
+}
+
+.section-title {
+  padding-bottom: var(--space-s);
+}
+
+.tests-chart {
+  margin-bottom: var(--space-s);
+}
+
+.button {
+  margin-top: var(--space-xs);
+}
+
+.register-condition {
+  padding-top: var(--space-xs);
+}

@@ -1,0 +1,131 @@
+/* -------------------------------- 
+  CARDS
+-------------------------------- */
+.card {
+  @include border;
+  background-color: var(--card-bg);
+
+  .card__cta {
+    align-self: center;
+    padding:  0 var(--space-unit);
+    transition: 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  &:hover:not(.card--test) {
+    background-color: var(--yellow);
+
+    .card__cta {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+.card--image {
+  .card__image {
+    height: 184px;
+  }
+
+  .card__title {
+    padding: var(--space-xs);
+  }
+}
+
+.card--curso, 
+.card--asignatura, 
+.card--temario {
+  display: flex;
+  justify-content: space-between;
+
+  .card__title {
+    padding: var(--space-unit);
+    padding-bottom: 0;
+  }
+}
+
+.card--curso  {
+  h3 {
+    font-weight: 400;
+  }
+
+  .card__subtitle {
+    font-size: 0.75rem;
+    padding: var(--space-unit);
+    text-transform: uppercase;
+  }
+}
+
+.card--asignatura {
+
+  .card__info {
+    flex-grow: 1;
+  }
+
+  progress[value] {
+    width: calc(100% - var(--space-xs));
+    margin: var(--space-unit);
+    margin-bottom: 10px;
+  }
+}
+
+.card--temario {
+  align-items: baseline;
+
+  .card__bullet {
+    width: var(--space-unit);
+    min-width: var(--space-unit);
+    height: var(--space-unit);
+    border-radius: 50%;
+    margin-left: var(--space-unit);
+
+    &--checked {
+      background-color: var(--green);
+    }
+
+    &--unchecked {
+      border: 1px solid var(--border-color);
+    }
+  }
+  .card__title {
+    padding-bottom: var(--space-unit);
+  }
+}
+
+.card--test{
+  padding: var(--space-xs);
+  min-height: 350px;
+
+  .question-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: var(--space-xs);
+
+    .test__counter {
+      align-self: flex-end;
+      padding-bottom: var(--space-xs);
+    }
+  }
+
+  .test__answers {
+    li {
+      margin: calc(var(--space-unit)/2) 0;
+      padding: calc(var(--space-unit)/2) 0;
+      cursor: pointer;
+    }
+  }
+
+  .test__final {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    min-height: 350px;
+    text-align: center;
+
+    button {
+      align-self: center;
+      margin: 0;
+      margin-top: var(--space-s);
+      max-width: 224px;
+    }
+  }
+}

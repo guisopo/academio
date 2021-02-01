@@ -1,0 +1,118 @@
+/* -------------------------------- 
+  FORMS
+-------------------------------- */
+// NEWSLETTER FORM
+.form--newsletter {
+  display: flex;
+  align-items: center;
+  @include border;
+  margin: var(--space-s) 0;
+  height: 3rem;
+  background-color: var(--white);
+  position: relative;
+
+  input {
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    height: inherit;
+    padding-left: 1rem;
+    
+    &:focus {
+      background-color: var(--input-focus);
+    }
+  }
+  
+  .button--arrow {
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+    height: inherit;
+    padding: 0 1rem;
+  }
+
+  .form--newsletter__checkbox {
+    position: absolute;
+    display: flex;
+    top: 100%;
+    margin: var(--space-xs) 0;
+
+    input {
+      width: unset;
+    }
+
+    input[type='checkbox'] {
+      border-radius: 0;
+      margin-left: 0;
+      margin-right: var(--space-unit);
+
+      &:checked {
+        background-color: orange;
+      }
+    }
+  }
+}
+
+// SELECT FORM
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--space-s);
+
+  label {
+    padding-bottom: var(--space-unit);
+  }
+
+  .select-container {
+    position: relative;
+
+    select {
+      @include border;
+      height: 3rem;
+      width: 100%;
+      padding: 0 0.5rem;
+      -moz-appearance:none; /* Firefox */
+      -webkit-appearance:none; /* Safari and Chrome */
+      appearance:none;
+      cursor: pointer;
+      background-color: var(--select-bg);
+
+      &:hover {
+        background-color: var(--bg-hover);
+      }
+    }
+
+    .select-arrow {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      padding-right: 0.5rem;
+      pointer-events: stroke;
+    }
+  }
+}
+
+// Tutor Form
+.tutor__form {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    padding-top: var(--space-xs);
+    margin-bottom: var(--space-unit);
+  }
+  input, textarea {
+    @include border;
+    padding: var(--space-unit) var(--space-xs);
+  }
+
+  input {
+    height: 2rem;
+  }
+
+  textarea {
+    resize: vertical;
+    height: 10rem;
+  }
+}

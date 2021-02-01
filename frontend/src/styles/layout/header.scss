@@ -1,0 +1,16 @@
+header {
+  padding: 0 5vw;
+  background-color: var(--color-background);
+  position: sticky;
+  top:0;
+  z-index: 1;
+  
+  .container {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+}

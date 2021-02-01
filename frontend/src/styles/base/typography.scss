@@ -1,0 +1,105 @@
+/* -------------------------------- 
+  TYPOGRAPHY
+-------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&family=Space+Grotesk:wght@400;600&display=swap');
+
+:root {
+  // FONTS
+  --font-primary: 'Source Sans Pro', sans-serif;
+  --font-secondary: 'Space Grotesk', sans-serif;
+  /* set base values */
+  --text-base-size: 1em;
+  --text-scale-ratio: 1.2;
+  /* type scale*/
+  --text-xs: calc(1em / (var(--text-scale-ratio) * var(--text-scale-ratio)));
+  --text-sm: calc(1em / var(--text-scale-ratio));
+  --text-md: calc(1em * var(--text-scale-ratio) );
+  --text-lg: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio));
+  --text-xl: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
+  --text-xxl: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
+   /* line-height */
+   --heading-line-height: 1.25;
+   --body-line-height: 1.4;
+   /* weight */
+   --bold: 600;
+}
+
+// @include breakpoint(md) {
+//   :root {
+//       // you can manage typography editing only these 2 variables
+//       --text-base-size: 1.25em;
+//       --text-scale-ratio: 1.25;
+//   }
+// }
+
+body {
+  font-size: var(--text-base-size);
+  font-family: var(--font-primary);
+  color: var(--color-text);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-secondary);
+  line-height: var(--heading-line-height);
+  font-weight: var(--bold);
+}
+
+h1 {
+  font-size: var(--text-xxl);
+}
+
+h2 {
+  font-size: var(--text-xl);
+}
+
+h3 {
+  font-size: var(--text-lg);
+}
+
+h4 {
+  font-size: var(--text-md);
+}
+
+p {
+  line-height: var(--body-line-height);
+
+  a {
+    font-weight: var(--bold);
+  }
+}
+
+.small {
+  font-size: var(--text-sm);
+  line-height: var(--body-line-height);
+  text-transform: uppercase;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: bolder;
+}
+
+.truncate {
+  // truncate text if it exceeds parent
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+input, textarea {
+  font-size: 1rem;
+  font-family: var(--font-primary);
+}
+
+.logo {
+  font-family: var(--font-secondary);
+  font-size: var(--text-lg);
+  font-weight: var(--bold);
+}
+
+.card__title {
+  font-family: var(--font-secondary);
+}

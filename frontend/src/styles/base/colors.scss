@@ -1,0 +1,60 @@
+/* -------------------------------- 
+  COLORS
+-------------------------------- */
+:root {
+  --black: #000000;
+  --blue: #0466C8;
+  --grey: #F2EFEF;
+  --grey-light: #F5F0F0;
+  --grey-dark: #DCDCDC;
+  --white: #FBF7F7;
+  --yellow: #FFFCE4;
+  --green: #16A413;
+
+  // BASE
+  --color-background: var(--grey);
+
+  // TYPOGRAPHY
+  --color-text: var(--black);
+  --color-label-primary: var(--blue);
+
+  // HOVER
+  --bg-hover: var(--yellow);
+
+  // BUTTONS
+  --btn-primary-bg: var(--blue);
+  --btn-primary-label: var(--grey);
+
+  // BORDER
+  --border-color: var(--black);
+
+  // INPUT
+  --input-focus: var(--yellow);
+  --select-bg: var(--white);
+
+  // CARD
+  --card-bg: var(--white);
+
+  // Notification
+  --notification-bg: var(--white);
+  --notification-bg--odd: var(--grey-light);
+
+  // Progress Bar
+  --progress-bar: var(--green);
+  --progress-bar-bg: var(--grey-dark);
+
+  // Chart
+  --chart-bg: var(--white);
+}
+
+// @include breakpoint(md) {
+//   :root {
+//       // you can manage typography editing only these 2 variables
+//       --text-base-size: 1.25em;
+//       --text-scale-ratio: 1.25;
+//   }
+// }
+
+body {
+  background-color: var(--color-background);
+}

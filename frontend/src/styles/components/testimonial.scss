@@ -1,0 +1,16 @@
+/* -------------------------------- 
+  TESTIMONIAL
+-------------------------------- */
+.testimonial {
+  width: 77.5vw;
+
+  .testimonial__user {
+    display: flex;
+    align-items: center;
+    padding-top: var(--space-s);
+
+    &-info {
+      padding-left: var(--space-xs);
+    }
+  }
+}
