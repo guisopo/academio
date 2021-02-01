@@ -21,28 +21,35 @@ const courseSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    required: true,
     trim: true
   },
   description: {
     type: String,
-    required: true,
     trim: true
   },
-  price: {
-    type: Number,
-    required: true,
-    trim: true
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    autopopulate: true
   },
   subjects: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Subject',
-      autopopulate: {
-        select: 'id title'
-      }
+      autopopulate: true
+    }
+  ],
+  quizzes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Quiz',
+      autopopulate: true
     }
   ]
+},
+{
+  // Assigns createAt and updatedAt fields with a Date type
+  timestamps: true
 });
 
 courseSchema.plugin(uniqueValidator);
