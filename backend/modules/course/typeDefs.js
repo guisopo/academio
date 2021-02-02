@@ -10,6 +10,8 @@ module.exports = gql`
     area: String,
     location: String,
     description: String,
+    bulletinLink: String,
+    officialTestDate: DateTime,
     createdAt: DateTime!,
     updatedAt: DateTime!
   }
@@ -25,6 +27,8 @@ module.exports = gql`
     area: String,
     location: String,
     description: String,
+    bulletinLink: String,
+    officialTestDate: DateTime,
     subjects: [ID!]
   }
 

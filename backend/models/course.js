@@ -28,6 +28,13 @@ const courseSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  bulletinLink: {
+    type: String,
+    trim: true
+  },
+  officialTestDate: {
+    type: Date,
+  },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
