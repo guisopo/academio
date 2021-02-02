@@ -1,49 +1,94 @@
-const { gql } = require('apollo-server');
+const { AuthenticationError, ForbiddenError } = require('apollo-server-express');
+const mongoose = require('mongoose');
+const isAdmin = require('../helpers');
 
-module.exports = gql`
-  scalar DateTime
+module.exports = {
+  Query: {
+    allCourses: async (parent, args, { models }) => {
+      try {
+        return await models.Course.find();
+      } catch (error) {
+        throw error;
+      }
+    },
 
-  type Course {
-    id: ID!,
-    title: String!,
-    organization: String,
-    area: String,
-    location: String,
-    description: String,
-    createdAt: DateTime!,
-    updatedAt: DateTime!
-  }
+    singleCourse: async (parent, { id }, { models }) => {
+      try {
+        return await models.Course.findById(id);
+      } catch (error) {
+        throw(error);
+      }
+    },
 
-  extend type User {
-    createdCourses: [Course!],
-    enrolledCourses: [Course!],
-  }
+    findCourse: async (parent, { args }, { models }) => {
+      try {
+        // Find course depending on arguments
+        return await models.Course.find({
+         $and: [
+            { organization: args.organization },
+            { location: args.location },
+            { area: args.area }
+         ]
+        });
+      } catch (error) {
+        throw(error);
+      }
+    }
+  },
 
-  input CourseInput {
-    title: String,
-    organization: String,
-    area: String,
-    location: String,
-    description: String,
-    subjects: [ID!]
-  }
+  Mutation: {
+    createCourse: async (parent, { args }, { models, currentUser }) => {
+      try {
+        // Check if user is admin
+        isAdmin(currentUser);
+        // Create course, add author and return value
+        return await models.Course.create({...args, author: mongoose.Types.ObjectId(currentUser.id)});
+      } catch (error) {
+        throw error;
+      }
+    },
 
-  input findCourseInput {
-    organization: [String!],
-    area: [String!],
-    location: [String!],
-  }
-  
-  extend type Query {
-    allCourses: [Course!],
-    singleCourse(id: ID!): Course,
-    findCourse(args: findCourseInput): [Course!]
-  }
+    updateCourse: async (parent, { id, args }, { models, currentUser }) => {
+      try {
+        // Check if user is admin
+        isAdmin(currentUser);
+        // Update course values
+        return await models.Course.findByIdAndUpdate(id, {...args}, { new: true });
+      } catch (error) {
+        throw error;
+      }
+    },
 
-  extend type Mutation {
-    createCourse(args: CourseInput): Course!,
-    updateCourse(id: ID!, args: CourseInput! ): Course,
-    deleteCourse(id: ID!): Course!,
-    addSubjectToCourse(courseId: ID!, subjectsId: [ID!]!): Course
+    deleteCourse: async(parent, { id }, { models, currentUser }) => {
+      try {
+        // Check if user is admin
+        isAdmin(currentUser);
+        // Remove course from DB
+        return await models.Course.findByIdAndRemove(id);
+      } catch (error) {
+        throw error;
+      }
+    },
+
+    addSubjectToCourse: async (parent, { courseId, subjectsId }, { models, currentUser }) => {
+      // Check if user is admin
+      // isAdmin(currentUser);
+      try {
+        // Find course in DB
+        const course = await models.Course.findById(courseId);
+        // Throw error if the course has already the subject
+        subjectsId.forEach(subjectId => {
+          if(course.subjects.find(subject => subject.id === subjectId)) {
+            console.log(`${subjectId} was already in the course`)
+          } else {
+            course.subjects = course.subjects.concat(subjectId);
+          }
+        });
+        // Add subject to course and save it
+        return await course.save();
+      } catch (error) {
+        throw error;
+      }
+    }
   }
-`;
+}
