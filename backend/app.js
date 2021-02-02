@@ -32,7 +32,7 @@ const getUser = token => {
 
 const server = new ApolloServer({ 
   modules: [
-    require('./modules/auth'),
+    require('./modules/user'),
     require('./modules/course'),
     require('./modules/subject'),
     require('./modules/quiz'),
