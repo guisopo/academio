@@ -2,6 +2,7 @@ const { gql } = require('apollo-server');
 
 module.exports = gql`
   type Topic {
+    id: ID,
     title: String,
     url: String
   }

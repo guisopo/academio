@@ -10,6 +10,7 @@ module.exports = gql`
     avatar: String,
     role: String!,
     testScores: [Int],
+    completedTopics: [ID!],
     createdAt: DateTime!,
     updatedAt: DateTime!
   }
@@ -51,6 +52,7 @@ module.exports = gql`
     updateUser(userId: ID, args: UserInput!): User!,
     deleteUser(email: String!, password: String!): User!,
     updateUserTestScores(score: Int!): User!,
-    joinCourse(courseId: ID): User!
+    joinCourse(courseId: ID!): User!,
+    handleTopicCompletion(topicId: ID!): User!
   }
 `;

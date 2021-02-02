@@ -43,7 +43,6 @@ const userSchema = new mongoose.Schema({
   completedTopics: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Topic'
     }
   ],
   testScores: [

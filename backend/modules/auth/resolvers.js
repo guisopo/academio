@@ -134,6 +134,28 @@ module.exports = {
       } catch (error) {
         throw error;
       }
+    },
+
+    handleTopicCompletion: async(root, { topicId }, { models, currentUser }) => {
+      try {
+        // Throw error if there is not currentUser
+        if(!currentUser) {
+          throw new Error('User must be logged in.');
+        }
+        // Find user in DB
+        const user = await models.User.findById(currentUser.id);
+        // If topic is already in completedTopics array remove from it
+        // else add topic to the array
+        if(user.completedTopics.find(topic => topic.toString() === topicId)) {
+          user.completedTopics = user.completedTopics.filter(topic => topic.toString() !== topicId);
+        } else {
+          user.completedTopics = user.completedTopics.concat(topicId);
+        }
+        // Save user in DB
+        return await user.save();
+      } catch (error) {
+        throw error;
+      }
     }
   }
 }
