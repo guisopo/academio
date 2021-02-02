@@ -2,6 +2,18 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const autoPopulate = require('mongoose-autopopulate');
 
+const completedTopicsSchema = {
+  topicId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Topic'
+  },
+  status: {
+    type: Boolean,
+    required: true,
+    default: 0
+  }
+};
+
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -30,7 +42,8 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    default: 'Student'
   },
   enrolledCourses: [
     {
@@ -39,6 +52,7 @@ const userSchema = new mongoose.Schema({
       autopopulate: true
     }
   ],
+  completedTopics: [completedTopicsSchema],
   testScores: [
     {
       type: Number
