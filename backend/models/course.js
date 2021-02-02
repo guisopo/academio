@@ -2,9 +2,6 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const autoPopulate = require('mongoose-autopopulate');
 
-const subjectSchema = {
-
-}
 
 const courseSchema = new mongoose.Schema({
   title: {
