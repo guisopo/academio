@@ -13,10 +13,11 @@ import {
   BrowserRouter as Router,
   Switch, Route
 } from 'react-router-dom';
-import ScrollToTop from 'react-router-scroll-top'
+import ScrollToTop from 'react-router-scroll-top';
+
+import { ApollloProvider } from '@apollo/client';
 
 function App() {
-  
   return (
     <Router>
       <ScrollToTop>
