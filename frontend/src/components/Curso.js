@@ -5,7 +5,7 @@ import SelectArrow from '../icons/SelectArrow';
 import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 
-const Curso = () => {
+const Curso = props => {
   const convocatoria = {
     date: '23 de marzo de 2021',
     link: 'https://www.boe.es/boe/dias/2020/01/08/pdfs/BOE-A-2020-241.pdf'
@@ -106,7 +106,7 @@ const Curso = () => {
 
   return (
     <div id="curso">
-      <h1 className="main-title">Agentes de hacienda pública</h1>
+      <h1 className="main-title">Agentes de hacienda pública {props.match.params.id}</h1>
       
       <section className="information">
         <div className="line"></div>
@@ -159,7 +159,7 @@ const Curso = () => {
             </select>
             <SelectArrow/>
           </div>
-          <Link to="test">
+          <Link to="/test">
             <button className="button button--primary">comenzar</button>
           </Link>
         </div>

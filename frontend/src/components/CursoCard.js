@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CircleArrow from '../icons/CircleArrow';
 
-const CursoCard = ({title, subtitle}) => {
+const CursoCard = ({id, title, subtitle}) => {
   return (
-    <Link to="/curso">
+    <Link to={`/curso/${id}`}>
       <div className="card card--curso">
         <div className="card__info">
           <div className="card__title">{title}</div>

@@ -10,6 +10,7 @@ const CursosList = ({name, cursos}) => {
               cursos.map((curso) =>
                 <li key={curso.id} className="list__item item">
                   <CursoCard 
+                    id="2304"
                     title={curso.title} 
                     subtitle={curso.subtitle}
                   />

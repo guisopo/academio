@@ -21,7 +21,7 @@ export const Routes = () => (
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/cursos" component={Cursos} />
-            <Route path="/curso" component={Curso} />
+            <Route path="/curso/:id" component={Curso} />
             <Route path="/asignatura" component={Asignatura} />
             <Route path="/test" component={TestPage} />
             <Route path="/login" component={Login} />
