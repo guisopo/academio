@@ -1,8 +1,8 @@
 import React from 'react';
-import Breadcrum from './Breadcrum';
-import TemarioCard from './TemarioCard';
-import TutorInformation from './TutorInformation';
-import TutorForm from './TutorForm';
+import Breadcrum from '../components/Breadcrum';
+import TemarioCard from '../components/TemarioCard';
+import TutorInformation from '../components/TutorInformation';
+import TutorForm from '../components/TutorForm';
 import TutorAvatar from '../images/avatar-profe.jpg';
 const Asignatura = () => {
   const temario = [

@@ -1,9 +1,9 @@
 import React from 'react';
 // Components
-import CardImage from './CardImage';
-import NewsletterForm from './NewsletterForm';
-import Testimonial from './Testimonial';
-import Bullets from './Bullets';
+import CardImage from '../components/CardImage';
+import NewsletterForm from '../components/NewsletterForm';
+import Testimonial from '../components/Testimonial';
+import Bullets from '../components/Bullets';
 // Images
 import mainImage from '../images/home.jpg';
 import cardImage1 from '../images/administracion.jpg';

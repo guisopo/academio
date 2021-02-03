@@ -1,6 +1,6 @@
 import React from 'react';
 import SelectArrow from '../icons/SelectArrow';
-import CursosList from './CursosList';
+import CursosList from '../components/CursosList';
 
 const Cursos = () => {
   const courseAreas = [

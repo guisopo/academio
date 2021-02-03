@@ -1,6 +1,6 @@
 import React from 'react';
-import Test from './Test';
-import Breadcrum from './Breadcrum';
+import Test from '../components/Test';
+import Breadcrum from '../components/Breadcrum';
 
 const TestPage = () => {
   const type = 'simulacro oposición';

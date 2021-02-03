@@ -1,14 +1,14 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Header from '../components/Header';
-import Home from '../components/Home';
-import Cursos from '../components/Cursos';
-import Curso from '../components/Curso';
-import Asignatura from '../components/Asignatura';
-import TestPage from '../components/TestPage';
-import Register from '../components/Register';
-import Login from '../components/Login';
-import PasswordRecovery from '../components/PasswordRecovery';
+import Home from '../pages/Home';
+import Cursos from '../pages/Cursos';
+import Curso from '../pages/Curso';
+import Asignatura from '../pages/Asignatura';
+import TestPage from '../pages/TestPage';
+import Register from '../pages/Register';
+import Login from '../pages/Login';
+import PasswordRecovery from '../pages/PasswordRecovery';
 
 import ScrollToTop from 'react-router-scroll-top';
 

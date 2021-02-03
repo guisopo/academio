@@ -1,6 +1,6 @@
 import React from 'react';
-import NotificationCenter from './NotificationCenter';
-import AsignaturaCard from './AsignaturaCard';
+import NotificationCenter from '../components/NotificationCenter';
+import AsignaturaCard from '../components/AsignaturaCard';
 import SelectArrow from '../icons/SelectArrow';
 import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
