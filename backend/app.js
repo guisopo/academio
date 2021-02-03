@@ -12,7 +12,7 @@ const path = '/graphql';
 
 app.use(bodyParser.json());
 // CORS middleware
-// app.use(cors())
+app.use(cors())
 
 
 mongoose.set('useCreateIndex', true);
