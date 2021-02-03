@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const { ApolloServer } = require('apollo-server-express');
 const mongoose = require('mongoose');
@@ -10,6 +11,8 @@ const app = express();
 const path = '/graphql';
 
 app.use(bodyParser.json());
+// CORS middleware
+// app.use(cors())
 
 
 mongoose.set('useCreateIndex', true);
@@ -30,7 +33,7 @@ const getUser = token => {
   }
 }
 
-const server = new ApolloServer({ 
+const server = new ApolloServer({
   modules: [
     require('./modules/user'),
     require('./modules/course'),
@@ -47,7 +50,7 @@ const server = new ApolloServer({
   }
 });
 
-server.applyMiddleware({ app, path });
+server.applyMiddleware({ app, path } );
 
 app.listen({ port: 4000 }, () => {
   console.log(`🚀  Server ready at http://localhost:4000${server.graphqlPath}`);
