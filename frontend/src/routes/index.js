@@ -12,27 +12,25 @@ import PasswordRecovery from '../components/PasswordRecovery';
 
 import ScrollToTop from 'react-router-scroll-top';
 
-export const Routes = () => {
-  return (
-    <BrowserRouter>
-      <ScrollToTop>
-        <div className="App">
-          <Header/>
-          <main className="main">
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/cursos" component={Cursos} />
-              <Route path="/curso" component={Curso} />
-              <Route path="/asignatura" component={Asignatura} />
-              <Route path="/test" component={TestPage} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route path="/recoverpassword" component={PasswordRecovery} />
-            </Switch>
-          </main> 
+export const Routes = () => (
+  <BrowserRouter>
+    <ScrollToTop>
+      <div className="App">
+        <Header/>
+        <main className="main">
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/cursos" component={Cursos} />
+            <Route path="/curso" component={Curso} />
+            <Route path="/asignatura" component={Asignatura} />
+            <Route path="/test" component={TestPage} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/recoverpassword" component={PasswordRecovery} />
+          </Switch>
+        </main> 
 
-        </div>
-      </ScrollToTop>
-    </BrowserRouter>
-  );
-}
+      </div>
+    </ScrollToTop>
+  </BrowserRouter>
+);
