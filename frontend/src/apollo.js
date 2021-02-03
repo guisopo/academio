@@ -1,10 +1,10 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 
-const uri = process.env.REACT_APP_API_URI;
 const cache = new InMemoryCache();
+const link = new HttpLink({ uri: 'http://localhost:4000/graphql' })
 
 export const client = new ApolloClient({
-  uri,
+  link,
   cache,
   connectToDevTools: true
 });

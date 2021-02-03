@@ -1,11 +1,14 @@
 import './styles/App.scss';
+import { ApolloProvider } from '@apollo/client';
 import { Routes } from './routes';
-// import { ApollloProvider } from '@apollo/client';
+import { client } from "./apollo";
 
 function App() {
   return (
-    <Routes />
-  );
+    <ApolloProvider client={client}>
+      <Routes />
+    </ApolloProvider>
+  )
 }
 
 export default App;

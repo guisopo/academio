@@ -10,8 +10,26 @@ import cardImage1 from '../images/administracion.jpg';
 import cardImage2 from '../images/sanidad.jpg';
 import avatarImage1 from '../images/avatar1.jpg';
 
-const Home = () => {
+import { useQuery, gql } from '@apollo/client';
 
+
+
+const ALL_COURSES = gql`
+  query {
+    allCourses {
+      title
+      id
+      author {
+        email
+      }
+    }
+  }
+`;
+
+
+const Home = () => {
+  const { data, loading, error, fetchMore } = useQuery(ALL_COURSES);
+  console.log(data);
   return (
     <>
       <section className="hero-section">
