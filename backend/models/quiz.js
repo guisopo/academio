@@ -17,6 +17,9 @@ const questionSchema = {
     type: String,
     required: true,
     trim: true
+  },
+  maxTime: {
+    type: Number
   }
 };
 

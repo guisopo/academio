@@ -12,6 +12,7 @@ module.exports = gql`
     title: String!
     description: String
     questions: [Question!]
+    maxTime: Int
     createdAt: DateTime!
     updatedAt: DateTime!
   }
@@ -30,6 +31,7 @@ module.exports = gql`
     title: String!
     description: String
     questions: [QuestionInput!]
+    maxTime: Int
     course: ID
   }
 
