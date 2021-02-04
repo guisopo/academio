@@ -7,14 +7,16 @@ const isAdmin = require('../helpers');
 
 module.exports = {
   Query: {
-    allUsers: async (parent, args, { models }) => {
+    allUsers: async (parent, args, { models, currentUser }) => {
+      isAdmin(currentUser);
       try {
         return await models.User.find();
       } catch (error) {
         throw error;
       }
     },
-    findUser: async(parent, { email }, { models }) => {
+    findUser: async(parent, { email }, { models, currentUser }) => {
+      isAdmin(currentUser);
       try {
         return await models.User.findOne({  email: email });
       } catch (error) {
@@ -22,7 +24,7 @@ module.exports = {
       }
     },
     me: async(parent, args, { models, currentUser }) => {
-      console.log(currentUser.id);
+      userLogged(currentUser);
       try {
         return await models.User.findById(currentUser.id)
       } catch (error) {
@@ -73,11 +75,15 @@ module.exports = {
     },
 
     updateUser: async (parent, { userId, args }, { models, currentUser }) => {
+      userLogged(currentUser);
       try {
         // Check if user is admin and there is id argument
         if(currentUser.role === 'Admin' && userId) {
           // Update passed ID user
           return await models.User.findByIdAndUpdate(id, {...args}, { new: true });
+        } else if (userId){
+          // Throw error if userId is passed without being Admin
+          throw new Error('You must have an Administration role to update other user.');
         } else {
           // Update current user
           return await models.User.findByIdAndUpdate(currentUser.id, {...args}, { new: true });
@@ -88,6 +94,7 @@ module.exports = {
     },
 
     deleteUser: async(parent, { email, password }, { models, currentUser }) => {
+      userLogged(currentUser);
       // Check if input email equals current user email
       if(currentUser.email != email) throw new AuthenticationError(`Current email doesn't match with this account email`);
       // Get current user
@@ -104,9 +111,7 @@ module.exports = {
     },
 
     updateUserTestScores: async (root, { score }, { models, currentUser }) => {
-      // Check if user is admin
-      // isAdmin(currentUser);
-      // Delete subject
+      userLogged(currentUser);
       try {
         const user = await models.User.findById(currentUser.id);
         user.testScores = user.testScores.concat(score);
@@ -117,11 +122,9 @@ module.exports = {
     },
 
     joinCourse: async (root, { courseId }, { models, currentUser }) => {
+      // Throw error if there is not currentUser
+      userLogged(currentUser);
       try {
-        // Throw error if there is not currentUser
-        if(!currentUser) {
-          throw new Error('User must be logged in.');
-        }
         // Find user in DB
         const user = await models.User.findById(currentUser.id);
         // Throw error if user is already enrolled to this course
@@ -137,11 +140,9 @@ module.exports = {
     },
 
     handleTopicCompletion: async(root, { topicId }, { models, currentUser }) => {
+      // Throw error if there is not currentUser
+      userLogged(currentUser);
       try {
-        // Throw error if there is not currentUser
-        if(!currentUser) {
-          throw new Error('User must be logged in.');
-        }
         // Find user in DB
         const user = await models.User.findById(currentUser.id);
         // If topic is already in completedTopics array remove from it

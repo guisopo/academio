@@ -24,7 +24,7 @@ module.exports = {
     createQuiz: async (root, { args }, { models, currentUser }) => {
       try {
         // Check if user is admin
-        // isAdmin(currentUser);
+        isAdmin(currentUser);
         // Create quiz
         console.log(models);
         const quiz = await models.Quiz.create({...args} );
@@ -32,7 +32,7 @@ module.exports = {
         const course = await models.Course.findById(args.course);
         course.quizzes = course.quizzes.concat(quiz.id);
         await course.save();
-        // Return subject saved in DB
+        // Return quiz saved in DB
         return quiz;
       } catch (error) {
         throw error;
@@ -41,8 +41,8 @@ module.exports = {
 
     updateQuiz: async (root, { id, args }, { models, currentUser }) => {
       // Check if user is admin
-      // isAdmin(currentUser);
-      // Update subject
+      isAdmin(currentUser);
+      // Update quiz
       try {
         return await models.Quiz.findByIdAndUpdate(id, {...args}, { new: true });
       } catch (error) {
@@ -52,8 +52,8 @@ module.exports = {
 
     deleteQuiz: async (root, { id }, { models, currentUser }) => {
       // Check if user is admin
-      // isAdmin(currentUser);
-      // Delete subject
+      isAdmin(currentUser);
+      // Delete quiz
       try {
         return await models.Quiz.findByIdAndRemove(id);
       } catch (error) {
@@ -63,8 +63,8 @@ module.exports = {
 
     addQuestionsToQuiz: async (root, { id, args }, { models, currentUser }) => {
       // Check if user is admin
-      // isAdmin(currentUser);
-      // Delete subject
+      isAdmin(currentUser);
+      // Add questions to existing quiz
       try {
         const quiz = await models.Quiz.findById(id);
         quiz.questions = quiz.questions.concat(args.questions);

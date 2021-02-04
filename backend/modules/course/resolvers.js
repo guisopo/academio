@@ -1,6 +1,6 @@
 const { AuthenticationError, ForbiddenError } = require('apollo-server-express');
 const mongoose = require('mongoose');
-const isAdmin = require('../helpers');
+const { isAdmin, userLogged } = require('../helpers');
 
 module.exports = {
   Query: {
@@ -38,9 +38,9 @@ module.exports = {
 
   Mutation: {
     createCourse: async (parent, { args }, { models, currentUser }) => {
+      // Check if user is admin
+      isAdmin(currentUser);
       try {
-        // Check if user is admin
-        isAdmin(currentUser);
         // Create course, add author and return value
         return await models.Course.create({...args, author: mongoose.Types.ObjectId(currentUser.id)});
       } catch (error) {
@@ -49,9 +49,9 @@ module.exports = {
     },
 
     updateCourse: async (parent, { id, args }, { models, currentUser }) => {
+      // Check if user is admin
+      isAdmin(currentUser);
       try {
-        // Check if user is admin
-        isAdmin(currentUser);
         // Update course values
         return await models.Course.findByIdAndUpdate(id, {...args}, { new: true });
       } catch (error) {
@@ -60,9 +60,9 @@ module.exports = {
     },
 
     deleteCourse: async(parent, { id }, { models, currentUser }) => {
+      // Check if user is admin
+      isAdmin(currentUser);
       try {
-        // Check if user is admin
-        isAdmin(currentUser);
         // Remove course from DB
         return await models.Course.findByIdAndRemove(id);
       } catch (error) {
@@ -72,7 +72,7 @@ module.exports = {
 
     addSubjectToCourse: async (parent, { courseId, subjectsId }, { models, currentUser }) => {
       // Check if user is admin
-      // isAdmin(currentUser);
+      isAdmin(currentUser);
       try {
         // Find course in DB
         const course = await models.Course.findById(courseId);
