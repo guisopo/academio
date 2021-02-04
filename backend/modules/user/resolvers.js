@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { AuthenticationError, ForbiddenError } = require('apollo-server-express');
 require('dotenv').config();
 const mongoose = require('mongoose');
-const isAdmin = require('../helpers');
+const { isAdmin, userLogged } = require('../helpers');
 
 module.exports = {
   Query: {

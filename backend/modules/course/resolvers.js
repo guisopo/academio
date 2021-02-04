@@ -1,6 +1,6 @@
 const { AuthenticationError, ForbiddenError } = require('apollo-server-express');
 const mongoose = require('mongoose');
-const { isAdmin, userLogged } = require('../helpers');
+const { isAdmin } = require('../helpers');
 
 module.exports = {
   Query: {

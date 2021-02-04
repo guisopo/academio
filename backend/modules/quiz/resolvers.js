@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const isAdmin = require('../helpers');
+const { isAdmin } = require('../helpers');
 
 module.exports = {
   Query: {
