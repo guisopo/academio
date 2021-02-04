@@ -1,43 +1,20 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const { ApolloServer } = require('apollo-server-express');
-const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
 const models =  require('./models');
-const permissions = require("./modules/permissions");
+const auth = require('./auth');
+const database = require('./database');
 
 const app = express();
-const path = '/graphql';
-
-app.use(bodyParser.json());
 // CORS middleware
 app.use(cors())
 
+// Connect to the database
+database.connect(process.env.MONGODB_URI);
 
-mongoose.set('useCreateIndex', true);
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('connected to MongoDB'))
-  .catch(error => console.error(`error: ${error.message}`));
-
-// Get the user info from JWT
-const getUser = token => {
-  // Verify that token exist and that starts with bearer
-  if(token && token.toLowerCase().startsWith('bearer ')) {
-    try {
-      // Return token without bearer keyword and verify it
-      return jwt.verify(token.substring(7), process.env.JWT_SECRET);
-    } catch(error) {
-      throw new Error('Session invalid');
-    }
-  }
-}
-
+// Apollo Server setup
 const server = new ApolloServer({
-  schema: applyMiddleware(
-    permissions
-  ), 
   modules: [
     require('./modules/user'),
     require('./modules/course'),
@@ -48,12 +25,14 @@ const server = new ApolloServer({
     // Get user token from headers
     const token = req.headers.authorization || '';
     // Try to retrieve a user with the token
-    const currentUser = getUser(token);
+    const currentUser = auth(token, process.env.JWT_SECRET);
     // add the db models to the context
     return { models, currentUser };
   }
 });
 
+// Apply the Apollo GraphQL middleware and set the path to /graphql
+const path = '/graphql';
 server.applyMiddleware({ app, path } );
 
 app.listen({ port: 4000 }, () => {
