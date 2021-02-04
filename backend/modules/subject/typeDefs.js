@@ -2,8 +2,8 @@ const { gql } = require('apollo-server');
 
 module.exports = gql`
   type Topic {
-    id: ID
-    title: String
+    id: ID!
+    title: String!
     url: String
   }
 
@@ -11,7 +11,9 @@ module.exports = gql`
     id: ID!
     title: String!
     description: String
-    topics: [Topic]
+    topics: [Topic!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
   extend type Course {
@@ -19,25 +21,25 @@ module.exports = gql`
   }
 
   input TopicInput {
-    title: String
+    title: String!
     url: String
   }
 
   input SubjectInput {
-    title: String
+    title: String!
     description: String
     courses: [ID!]
-    topics: [TopicInput]
+    topics: [TopicInput!]
   }
 
   extend type Query {
-    allSubjects: [Subject!]!
-    singleSubject(id: ID): Subject
+    allSubjects: [Subject!]
+    singleSubject(id: ID!): Subject
   }
 
   extend type Mutation {
-    createSubject(args: SubjectInput): Subject
-    updateSubject(args: SubjectInput id: ID): Subject
-    deleteSubject(id: ID!): Subject
+    createSubject(args: SubjectInput!): Subject!
+    updateSubject(id: ID! args: SubjectInput!): Subject!
+    deleteSubject(id: ID!): Subject!
   }
 `;

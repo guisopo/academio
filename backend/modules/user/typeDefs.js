@@ -6,38 +6,42 @@ module.exports = gql`
     firstName: String!
     lastName: String!
     email: String!
-    password: String
+    password: String!
     avatar: String
     role: String!
-    testScores: [Int]
+    testScores: [Int!]
     completedTopics: [ID!]
     createdAt: DateTime!
     updatedAt: DateTime!
   }
 
   extend type Course {
-    author: User
+    author: User!
   }
 
   extend type Subject {
-    author: User
+    author: User!
+  }
+
+  extend type Quiz {
+    author: User!
   }
 
   type AuthData {
     id: ID!
     token: String!
     tokenExpiration: Int!
-    role: String
+    role: String!
   }
 
   input UserInput {
-    firstName: String
-    lastName: String
-    email: String
-    password: String
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
     role: String
     enrolledCourses: [ID!]
-    testScores: [Int]
+    testScores: [Int!]
   }
 
   type Query {
@@ -47,9 +51,9 @@ module.exports = gql`
   }
 
   type Mutation {
-    signUp(args: UserInput): AuthData!
+    signUp(args: UserInput!): AuthData!
     signIn(email: String! password: String!): AuthData!
-    updateUser(userId: ID args: UserInput!): User!
+    updateUser(userId: ID! args: UserInput!): User!
     deleteUser(email: String! password: String!): User!
     updateUserTestScores(score: Int!): User!
     joinCourse(courseId: ID!): User!

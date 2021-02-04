@@ -11,7 +11,9 @@ module.exports = gql`
     id: ID!
     title: String!
     description: String
-    questions: [Question]
+    questions: [Question!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
   extend type Course {
@@ -19,31 +21,31 @@ module.exports = gql`
   }
 
   input QuestionInput {
-    question: String
-    answers: [String!]
-    correct: String
+    question: String!
+    answers: [String!]!
+    correct: String!
   }
 
   input QuizInput {
-    title: String
+    title: String!
     description: String
-    questions: [QuestionInput]
+    questions: [QuestionInput!]
     course: ID
   }
 
   input addQuestionsInput {
-    questions: [QuestionInput]
+    questions: [QuestionInput!]!
   }
 
   extend type Query {
-    allQuizzes: [Quiz!]!
-    singleQuiz(id: ID): Quiz
+    allQuizzes: [Quiz!]
+    singleQuiz(id: ID!): Quiz
   }
 
   extend type Mutation {
-    createQuiz(args: QuizInput): Quiz
-    updateQuiz(id: ID args: QuizInput): Quiz
-    deleteQuiz(id: ID!): Quiz
-    addQuestionsToQuiz(id: ID! args: addQuestionsInput): Quiz
+    createQuiz(args: QuizInput!): Quiz!
+    updateQuiz(id: ID! args: QuizInput!): Quiz!
+    deleteQuiz(id: ID!): Quiz!
+    addQuestionsToQuiz(id: ID! args: addQuestionsInput!): Quiz!
   }
 `;

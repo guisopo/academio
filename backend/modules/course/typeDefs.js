@@ -7,7 +7,7 @@ module.exports = gql`
     id: ID!
     title: String!
     organization: String
-    area: String
+    area: String!
     location: String
     description: String
     bulletinLink: String
@@ -45,9 +45,9 @@ module.exports = gql`
   }
 
   extend type Mutation {
-    createCourse(args: CourseInput): Course!
-    updateCourse(id: ID! args: CourseInput! ): Course
+    createCourse(args: CourseInput!): Course!
+    updateCourse(id: ID! args: CourseInput!): Course!
     deleteCourse(id: ID!): Course!
-    addSubjectToCourse(courseId: ID! subjectsId: [ID!]!): Course
+    addSubjectToCourse(courseId: ID! subjectsId: [ID!]!): Course!
   }
 `;
