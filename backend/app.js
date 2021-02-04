@@ -42,7 +42,7 @@ const server = new ApolloServer({
   ],
   context: async ({ req }) => {
     // Get user token from headers
-    const token = req.headers.authorization;
+    const token = req.headers.authorization || '';
     // Try to retrieve a user with the token
     const currentUser = getUser(token);
     // add the db models to the context

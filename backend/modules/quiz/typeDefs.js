@@ -2,15 +2,15 @@ const { gql } = require('apollo-server');
 
 module.exports = gql`
   type Question {
-    question: String,
-    answers: [String!],
+    question: String
+    answers: [String!]
     correct: String
   }
 
   type Quiz {
-    id: ID!,
-    title: String!,
-    description: String,
+    id: ID!
+    title: String!
+    description: String
     questions: [Question]
   }
 
@@ -19,16 +19,16 @@ module.exports = gql`
   }
 
   input QuestionInput {
-    question: String,
-    answers: [String!],
+    question: String
+    answers: [String!]
     correct: String
   }
 
   input QuizInput {
-    title: String,
-    description: String,
-    questions: [QuestionInput],
-    course: ID,
+    title: String
+    description: String
+    questions: [QuestionInput]
+    course: ID
   }
 
   input addQuestionsInput {
@@ -36,14 +36,14 @@ module.exports = gql`
   }
 
   extend type Query {
-    allQuizzes: [Quiz!]!,
-    singleQuiz(id: ID): Quiz,
+    allQuizzes: [Quiz!]!
+    singleQuiz(id: ID): Quiz
   }
 
   extend type Mutation {
-    createQuiz(args: QuizInput): Quiz,
-    updateQuiz(id: ID, args: QuizInput): Quiz,
-    deleteQuiz(id: ID!): Quiz,
-    addQuestionsToQuiz(id: ID!, args: addQuestionsInput): Quiz
+    createQuiz(args: QuizInput): Quiz
+    updateQuiz(id: ID args: QuizInput): Quiz
+    deleteQuiz(id: ID!): Quiz
+    addQuestionsToQuiz(id: ID! args: addQuestionsInput): Quiz
   }
 `;
