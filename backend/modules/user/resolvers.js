@@ -67,7 +67,7 @@ module.exports = {
       const passwordCorrect = await bcrypt.compare(password, user.password);
       if(!passwordCorrect) throw new Error(`Incorrect password.`);
       // Get json web token
-      const token = jwt.sign({ id: user.id, email: user.email, role: user.role}, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ id: user.id, email: user.email, role: user.role}, process.env.JWT_SECRET, { expiresIn: '1d' });
 
       return { id: user.id, role: user.role, token: token, tokenExpiration: 1};
     },

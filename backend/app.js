@@ -6,6 +6,7 @@ const { ApolloServer } = require('apollo-server-express');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const models =  require('./models');
+const permissions = require("./modules/permissions");
 
 const app = express();
 const path = '/graphql';
@@ -25,7 +26,7 @@ const getUser = token => {
   // Verify that token exist and that starts with bearer
   if(token && token.toLowerCase().startsWith('bearer ')) {
     try {
-      // Return token without bearer keyword
+      // Return token without bearer keyword and verify it
       return jwt.verify(token.substring(7), process.env.JWT_SECRET);
     } catch(error) {
       throw new Error('Session invalid');
@@ -34,6 +35,9 @@ const getUser = token => {
 }
 
 const server = new ApolloServer({
+  schema: applyMiddleware(
+    permissions
+  ), 
   modules: [
     require('./modules/user'),
     require('./modules/course'),
