@@ -18,8 +18,10 @@ const questionSchema = {
     required: true,
     trim: true
   },
-  maxTime: {
-    type: Number
+  solution: {
+    type: String,
+    required: true,
+    trim: true
   }
 };
 
@@ -34,7 +36,10 @@ const quizSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  questions: [questionSchema]
+  questions: [questionSchema],
+  maxTime: {
+    type: Number
+  }
 },
 {
   // Assigns createAt and updatedAt fields with a Date type
