@@ -2,16 +2,36 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const autoPopulate = require('mongoose-autopopulate');
 
+const convocationSchema = {
+  organization: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  bulletinLink: {
+    type: String,
+    trim: true
+  },
+  requirements: [
+    {
+      type: String,
+      trim: true
+    }
+  ],
+  officialTestDate: {
+    type: Date,
+  },
+  state: {
+    type: String,
+    trim: true
+  }
+};
+
 const courseSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
     unique: true,
-    trim: true
-  },
-  organization: {
-    type: String,
-    required: true,
     trim: true
   },
   area: {
@@ -22,23 +42,6 @@ const courseSchema = new mongoose.Schema({
   description: {
     type: String,
     trim: true
-  },
-  requirements: [
-    {
-      type: String,
-      trim: true
-    }
-  ],
-  state: {
-    type: String,
-    trim: true
-  },
-  bulletinLink: {
-    type: String,
-    trim: true
-  },
-  officialTestDate: {
-    type: Date,
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
@@ -58,7 +61,8 @@ const courseSchema = new mongoose.Schema({
       ref: 'Quiz',
       autopopulate: true
     }
-  ]
+  ],
+  convocation: convocationSchema
 },
 {
   // Assigns createAt and updatedAt fields with a Date type

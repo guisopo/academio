@@ -3,18 +3,22 @@ const { gql } = require('apollo-server');
 module.exports = gql`
   scalar DateTime
 
-  type Course {
-    id: ID!
-    title: String!
+  type Convocation {
     organization: String!
-    area: String!
-    description: String
     requirements: [String!]
     state: String
     bulletinLink: String
     officialTestDate: DateTime
+  }
+
+  type Course {
+    id: ID!
+    title: String!    
+    area: String!
+    description: String
     createdAt: DateTime!
     updatedAt: DateTime!
+    convocation: Convocation
   }
 
   extend type User {
@@ -22,13 +26,19 @@ module.exports = gql`
     enrolledCourses: [Course!]
   }
 
+  input ConvocationInput {
+    organization: String
+    bulletinLink: String
+    requirements: [String!]
+    state: String
+    officialTestDate: DateTime
+  }
+
   input CourseInput {
     title: String
-    organization: String
     area: String
     description: String
-    bulletinLink: String
-    officialTestDate: DateTime
+    convocation: ConvocationInput
     subjects: [ID!]
   }
 
