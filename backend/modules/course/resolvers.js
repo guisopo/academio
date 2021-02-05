@@ -26,7 +26,6 @@ module.exports = {
         return await models.Course.find({
          $and: [
             { organization: args.organization },
-            { location: args.location },
             { area: args.area }
          ]
         });

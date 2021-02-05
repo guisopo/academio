@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const autoPopulate = require('mongoose-autopopulate');
 
-
 const courseSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -20,11 +19,17 @@ const courseSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  location: {
+  description: {
     type: String,
     trim: true
   },
-  description: {
+  requirements: [
+    {
+      type: String,
+      trim: true
+    }
+  ],
+  state: {
     type: String,
     trim: true
   },

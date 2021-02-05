@@ -6,10 +6,11 @@ module.exports = gql`
   type Course {
     id: ID!
     title: String!
-    organization: String
+    organization: String!
     area: String!
-    location: String
     description: String
+    requirements: [String!]
+    state: String
     bulletinLink: String
     officialTestDate: DateTime
     createdAt: DateTime!
@@ -25,7 +26,6 @@ module.exports = gql`
     title: String
     organization: String
     area: String
-    location: String
     description: String
     bulletinLink: String
     officialTestDate: DateTime
@@ -35,7 +35,6 @@ module.exports = gql`
   input findCourseInput {
     organization: [String!]
     area: [String!]
-    location: [String!]
   }
   
   extend type Query {
