@@ -28,11 +28,11 @@ module.exports = {
         // Create subject and append current user as an author
         const subject = await models.Subject.create({...args, author: mongoose.Types.ObjectId(currentUser.id)} );
         // For each course ID insert into each course the subject ID
-        args.courses.forEach(async courseId => {
+        args.courses ? args.courses.forEach(async courseId => {
           const course = await models.Course.findById(courseId);
           course.subjects = course.subjects.concat(subject.id);
           course.save();
-        });
+        }) : '';
         // Return subject saved in DB
         return subject;
       } catch (error) {
