@@ -58,7 +58,7 @@ module.exports = {
         throw new Error(error);
       }
     },
-    
+
     signIn: async (parent, { email, password }, { models }) => {
       // Normalize email address
       email = email.trim().toLowerCase();
@@ -80,7 +80,7 @@ module.exports = {
         // Check if user is admin and there is id argument
         if(currentUser.role === 'Admin' && userId) {
           // Update passed ID user
-          return await models.User.findByIdAndUpdate(id, {...args}, { new: true });
+          return await models.User.findByIdAndUpdate(userId, {...args}, { new: true });
         } else if (userId){
           // Throw error if userId is passed without being Admin
           throw new Error('You must have an Administration role to update other user.');
@@ -110,11 +110,22 @@ module.exports = {
       }
     },
 
-    updateUserTestScores: async (root, { score }, { models, currentUser }) => {
+    updateUserTestScore: async (root, { testTitle, userScore }, { models, currentUser }) => {
       userLogged(currentUser);
       try {
+        // Find current user in DB
         const user = await models.User.findById(currentUser.id);
-        user.testScores = user.testScores.concat(score);
+        // Grab curren user test scores field
+        const testToUpdate = user.testScores.find((test) => test.title === testTitle);
+        // If user doesn't have this test in its profile
+        if(!testToUpdate) {
+          // Add to it's
+          user.testScores = user.testScores.concat({title: testTitle, scores: userScore});
+        } else {
+          // Add new score to scores array
+          testToUpdate.scores = testToUpdate.scores.concat(userScore);
+        }
+        // Update user in DB
         return await user.save();
       } catch (error) {
         throw error;

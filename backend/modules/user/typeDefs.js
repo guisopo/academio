@@ -1,6 +1,11 @@
 const { gql } = require('apollo-server');
 
 module.exports = gql`
+  type TestScore {
+    title: String,
+    scores: [Int]
+  }
+
   type User {
     id: ID!
     firstName: String!
@@ -9,7 +14,7 @@ module.exports = gql`
     password: String!
     avatar: String
     role: String!
-    testScores: [Int!]
+    testScores: [TestScore]
     completedTopics: [ID!]
     createdAt: DateTime!
     updatedAt: DateTime!
@@ -34,14 +39,19 @@ module.exports = gql`
     role: String!
   }
 
+  input TestScoreInput {
+    title: String,
+    scores: [Int]
+  }
+
   input UserInput {
-    firstName: String!
-    lastName: String!
-    email: String!
-    password: String!
+    firstName: String
+    lastName: String
+    email: String
+    password: String
     role: String
     enrolledCourses: [ID!]
-    testScores: [Int!]
+    testScores: TestScoreInput
   }
 
   type Query {
@@ -53,9 +63,9 @@ module.exports = gql`
   type Mutation {
     signUp(args: UserInput!): AuthData!
     signIn(email: String! password: String!): AuthData!
-    updateUser(userId: ID! args: UserInput!): User!
+    updateUser(userId: ID args: UserInput!): User!
     deleteUser(email: String! password: String!): User!
-    updateUserTestScores(score: Int!): User!
+    updateUserTestScore(testTitle: String!, userScore: Int!): User!
     joinCourse(courseId: ID!): User!
     handleTopicCompletion(topicId: ID!): User!
   }
