@@ -22,7 +22,7 @@ export const Routes = () => (
             <Route path="/" exact component={Home} />
             <Route path="/cursos" component={Cursos} />
             <Route path="/curso/:id" component={Curso} />
-            <Route path="/asignatura" component={Asignatura} />
+            <Route path="/asignatura/:id" component={Asignatura} />
             <Route path="/test" component={TestPage} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />

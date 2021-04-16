@@ -1,76 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SelectArrow from '../icons/SelectArrow';
 import CursosList from '../components/CursosList';
 
+import { useQuery } from '@apollo/client';
+import { ALL_COURSES } from '../gql/query';
+
 const Cursos = () => {
-  const courseAreas = [
-    {
-      id: 1,
-      name: 'Economía y Hacienda',
-      cursos: [
-        {
-          id: 1,
-          title: 'Gestión de la administración civil del estado',
-          subtitle: 'Administración general del estado',
-          link: '/'
-        },
-        {
-          id: 2,
-          title: 'Agentes de hacienda pública',
-          subtitle: 'Administración general del estado',
-          link: '/'
-        }
-      ]
-    },
-    {
-      id: 2,
-      name: 'Justicia',
-      cursos: [
-        {
-          id: 3,
-          title: 'Letrado de la administración del estado',
-          subtitle: 'Administración general del estado',
-          link: '/'
-        },
-        {
-          id: 4,
-          title: 'Gestión procesal y administrativa',
-          subtitle: 'Administración general del estado',
-          link: '/'
-        },
-        {
-          id: 5,
-          title: 'Auxilio social',
-          subtitle: 'Administración general del estado',
-          link: '/'
-        }
-      ]
-    },
-    {
-      id: 3,
-      name: 'Administración general',
-      cursos: [
-        {
-          id: 6,
-          title: 'Adminsitrativo del estado',
-          subtitle: 'Administración general del estado',
-          link: '/'
-        },
-        {
-          id: 7,
-          title: 'Técnico auxiliar del estado',
-          subtitle: 'Administración general del estado',
-          link: '/'
-        },
-        {
-          id: 8,
-          title: 'Gestión  de la administración civil del estado',
-          subtitle: 'Administración general del estado',
-          link: '/'
-        }
-      ]
-    }
-  ];
+  const [coursesAreas, setCoursesAreas] = useState([]);
+
+  const { data, loading, error } = useQuery(ALL_COURSES);
+  
+  if(loading) return <p>Loading...</p>;
+  if(error) return <p>There was an error.</p>;
+
+  data.allCourses.forEach(course => {
+    if(!coursesAreas.includes(course.area)) setCoursesAreas(coursesAreas.concat(course.area));
+  });
 
   return (
     <div id="cursos">
@@ -82,11 +27,9 @@ const Cursos = () => {
           <div className="select-container">
             <select name="tipo" id="tipo-select">
               <option value="todas">Todas</option>
-              <option value="hacienda">Economía y Hacienda</option>
-              <option value="justicia">Justicia</option>
-              <option value="sanidad">Sanidad</option>
-              <option value="administracion">Administración General</option>
-              <option value="informatica">Informática</option>
+              {
+                coursesAreas.map(area => <option value={area}>{area}</option>)
+              }
             </select>
             <SelectArrow/>
           </div>
@@ -110,11 +53,11 @@ const Cursos = () => {
 
       <section className="list-section list-section--course">
         {
-          courseAreas.map((area) => 
+          coursesAreas.map((area) => 
             <CursosList 
-              key={area.id} 
-              name={area.name} 
-              cursos={area.cursos} />)
+              key={area} 
+              name={area} 
+              cursos={data.allCourses} />)
         }
       </section>
     </div>

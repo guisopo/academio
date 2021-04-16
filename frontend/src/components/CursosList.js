@@ -7,14 +7,13 @@ const CursosList = ({name, cursos}) => {
       <h2 className="list-section__title">{name}</h2>
       <ul className="list">
             {
-              cursos.map((curso) =>
-                <li key={curso.id} className="list__item item">
-                  <CursoCard 
-                    id="2304"
+              cursos.map(curso =>
+                  <CursoCard
+                    key ={curso.id}
+                    id={curso.id}
                     title={curso.title} 
-                    subtitle={curso.subtitle}
+                    subtitle={curso.convocation.organization}
                   />
-                </li>
               )
             }
       </ul>

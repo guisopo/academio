@@ -4,34 +4,10 @@ import AsignaturaCard from '../components/AsignaturaCard';
 import SelectArrow from '../icons/SelectArrow';
 import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { SINGLE_COURSE } from '../gql/query';
 
 const Curso = props => {
-  const convocatoria = {
-    date: '23 de marzo de 2021',
-    link: 'https://www.boe.es/boe/dias/2020/01/08/pdfs/BOE-A-2020-241.pdf'
-  };
-
-  const asignaturas = [
-    {
-      id: 1,
-      title: 'Derecho civil y mercantil. Economía',
-      progress: 95,
-      link: '/',
-    },
-    {
-      id: 2,
-      title: 'Derecho civil y mercantil. Economía',
-      progress: 22,
-      link: '/',
-    },
-    {
-      id: 3,
-      title: 'Derecho civil y mercantil. Economía',
-      progress: 0,
-      link: '/',
-    }
-  ];
-
   const testsResults = [
     {
       date: '10 FEB',
@@ -73,6 +49,12 @@ const Curso = props => {
     ]
   };
 
+  const id = props.match.params.id;
+
+  const { data, loading, error } = useQuery(SINGLE_COURSE, {
+    variables: { id },
+  });
+
   chartData.labels = testsResults.map(test => test.date);
   chartData.datasets[0].data = testsResults.map(test => test.result);
 
@@ -104,17 +86,25 @@ const Curso = props => {
     }
   }
 
+  if(loading) return <p>Loaging...</p>
+  if(error) return <p>There was an error.</p>
+
+  const { title, convocation, subjects } = data.singleCourse;
+  const { officialTestDate, bulletinLink } = convocation;
+  const date = new Date(officialTestDate);
+  let dateOptions = { month: 'long'};
+
   return (
     <div id="curso">
-      <h1 className="main-title">Agentes de hacienda pública {props.match.params.id}</h1>
+      <h1 className="main-title">{title}</h1>
       
       <section className="information">
         <div className="line"></div>
         <h2 className="section-title">Información</h2>
 
         <ul className="information__list">
-          <li className="information__item">La convocatoria para tus oposiciones es el {convocatoria.date}</li>
-          <li className="information__item">Consulta el BOE en este <a href={convocatoria.link}>enlace</a> para conocer todos los detalles.</li>
+          <li className="information__item">La convocatoria para tus oposiciones es el {date.getDate()} de {new Intl.DateTimeFormat('es-ES', dateOptions).format(date)} de {date.getFullYear()}</li>
+          <li className="information__item">Consulta el BOE en este <a href={bulletinLink}>enlace</a> para conocer todos los detalles.</li>
         </ul>
       </section>
 
@@ -129,14 +119,12 @@ const Curso = props => {
         <h2 className="section-title">Asignaturas</h2>
         <ul className="list">
           {
-            asignaturas.map((asignatura) =>
-              <li className="list__item item" key={asignatura.id}>
-                  <AsignaturaCard 
-                    title={asignatura.title} 
-                    progress={asignatura.progress}
-                    link={asignatura.link}
-                  />
-              </li>
+            subjects.map((subject) =>
+              <AsignaturaCard
+                key={subject.id}
+                id={subject.id}
+                title={subject.title} 
+              />
             )
           }
         </ul>

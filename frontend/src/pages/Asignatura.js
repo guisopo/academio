@@ -4,7 +4,10 @@ import TemarioCard from '../components/TemarioCard';
 import TutorInformation from '../components/TutorInformation';
 import TutorForm from '../components/TutorForm';
 import TutorAvatar from '../images/avatar-profe.jpg';
-const Asignatura = () => {
+import { useQuery } from '@apollo/client';
+import { SINGLE_SUBJECT } from '../gql/query';
+
+const Asignatura = (props) => {
   const temario = [
     {
       id: 1,
@@ -62,15 +65,26 @@ const Asignatura = () => {
     avatar: TutorAvatar
   }
 
+  const id = props.match.params.id;
+
+  const { data, loading, error } = useQuery(SINGLE_SUBJECT, {
+    variables: { id }
+  });
+
+  if(loading) return <p>Loaging...</p>
+  if(error) return <p>There was an error.</p>
+
+  const { title, description, topics } = data.singleSubject;
+
   return (
     <div>
       <Breadcrum parent={'Agentes de hacienda pública'} child={'Derecho civil y mercantil. Economía'}/>
-      <h1 className="main-title main-title--BC">Derecho civil y mercantil. Economía</h1>
+      <h1 className="main-title main-title--BC">{title}</h1>
 
       <section>
         <div className="line"></div>
         <h2 className="section-title">Descripción</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>{description}</p>
       </section>
 
       <section>
@@ -78,7 +92,7 @@ const Asignatura = () => {
         <h2 className="section-title">Temario</h2>
         <ul>
           {
-            temario.map(tema=><li key={tema.id} className="list__item"><TemarioCard title={tema.title} temaPosition={tema.temaPosition} checked={tema.checked}/></li>)
+            topics.map(topic=><li key={topic.id} className="list__item"><TemarioCard title={topic.title}/></li>)
           }
         </ul>
       </section>
