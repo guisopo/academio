@@ -49,15 +49,6 @@ const Curso = props => {
     ]
   };
 
-  const id = props.match.params.id;
-
-  const { data, loading, error } = useQuery(SINGLE_COURSE, {
-    variables: { id },
-  });
-
-  chartData.labels = testsResults.map(test => test.date);
-  chartData.datasets[0].data = testsResults.map(test => test.result);
-
   const chartOptions = {
     scales: {
       yAxes: [
@@ -85,6 +76,14 @@ const Curso = props => {
       ]
     }
   }
+
+  const { data, loading, error } = useQuery(SINGLE_COURSE, {
+    variables: { id: props.match.params.id },
+  });
+
+  chartData.labels = testsResults.map(test => test.date);
+  chartData.datasets[0].data = testsResults.map(test => test.result);
+
 
   if(loading) return <p>Loaging...</p>
   if(error) return <p>There was an error.</p>

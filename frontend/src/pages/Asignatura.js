@@ -8,67 +8,14 @@ import { useQuery } from '@apollo/client';
 import { SINGLE_SUBJECT } from '../gql/query';
 
 const Asignatura = (props) => {
-  const temario = [
-    {
-      id: 1,
-      temaPosition: '1',
-      title: 'El concepto de persona. Clases de personas. Personas físicas: Nacimiento y extinción',
-      checked: true,
-      link: '/'
-    },
-    {
-      id: 2,
-      temaPosition: '2',
-      title: 'El concepto de persona. Clases de personas. Personas físicas: Nacimiento y extinción',
-      checked: true,
-      link: '/'
-    },
-    {
-      id: 3,
-      temaPosition: '3',
-      title: 'El concepto de persona. Clases de personas. Personas físicas: Nacimiento y extinción',
-      checked: true,
-      link: '/'
-    },
-    {
-      id: 4,
-      temaPosition: '4',
-      title: 'El concepto de persona. Clases de personas. Personas físicas: Nacimiento y extinción',
-      checked: true,
-      link: '/'
-    },
-    {
-      id: 5,
-      temaPosition: '5',
-      title: 'El concepto de persona. Clases de personas. Personas físicas: Nacimiento y extinción',
-      checked: false,
-      link: '/'
-    },
-    {
-      id: 6,
-      temaPosition: '6',
-      title: 'El concepto de persona. Clases de personas. Personas físicas: Nacimiento y extinción',
-      checked: false,
-      link: '/'
-    },
-    {
-      id: 7,
-      temaPosition: '7',
-      title: 'El concepto de persona. Clases de personas. Personas físicas: Nacimiento y extinción',
-      checked: false,
-      link: '/'
-    }
-  ];
 
   const tutor = {
     name: 'M.J. Morant',
     avatar: TutorAvatar
   }
 
-  const id = props.match.params.id;
-
   const { data, loading, error } = useQuery(SINGLE_SUBJECT, {
-    variables: { id }
+    variables: { id: props.match.params.id }
   });
 
   if(loading) return <p>Loaging...</p>
