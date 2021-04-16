@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../UserContext';
 
 const NavMobile = ({ handleClick, handleRoute }) => {
+  const { user } = useContext(UserContext);
+
   return (
     <div className="nav-menu nav-menu--mobile">
       <div className="nav-menu__background"></div>
@@ -30,12 +33,22 @@ const NavMobile = ({ handleClick, handleRoute }) => {
           Contacto
         </li>
         <li className="line line--full line--white"></li>
-        <Link onClick={(e) => handleRoute(e)} to="/register">
-          <li>Regístrate</li>
-        </Link>
-        <Link onClick={(e) => handleRoute(e)} to="/login">
-          <li>Incia sesión</li>
-        </Link>
+        {
+          !user
+            ?
+              <>
+                <Link onClick={(e) => handleRoute(e)} to="/register">
+                  <li>Regístrate</li>
+                </Link>
+                <Link onClick={(e) => handleRoute(e)} to="/login">
+                  <li>Incia sesión</li>
+                </Link>
+              </>
+            : 
+              <Link onClick={(e) => handleRoute(e)} to="/">
+                <li>Cierra sesión</li>
+              </Link>
+        }
       </ul>
     </div>
   );
