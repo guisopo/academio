@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // Components
 import CardImage from '../components/CardImage';
 import NewsletterForm from '../components/NewsletterForm';

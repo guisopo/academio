@@ -1,7 +1,11 @@
-import React, { useReducer } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { Link, Redirect } from 'react-router-dom';
+import { SIGN_IN } from '../gql/mutation';
+import { UserContext } from '../UserContext';
 
-const Register = () => {
+const Login = () => {
+  const { user, setUser } = useContext(UserContext);
   const [userInput, setUserInput] = useReducer(
     (state, newState) => ({...state, ...newState}),
     {
@@ -10,16 +14,31 @@ const Register = () => {
     }
   );
 
+  const [signIn, { data, loading, error }] = useMutation(SIGN_IN);
+
+  const handleMutation = () => {
+    if(data) {
+      localStorage.setItem('academio-user-token', data.signIn.token);
+      setUser(data.signIn);
+    }
+  }
+
+  useEffect(handleMutation, [data]);
+
   const handleChange = (event) => {
     const name = event.target.name;
     const newValue = event.target.value;
     setUserInput({[name]: newValue});
   }
 
-  const handleSubmition = (event) => {
+  const handleSubmition = async (event) => {
     event.preventDefault();
-    console.log(userInput);
+    await signIn({ variables: userInput });
   }
+
+  if(loading) return <p>Loaging...</p>
+  if(error) return <p>There was an error.</p>
+  if(user) return <Redirect to="/" />;
 
   return (
     <div>
@@ -29,7 +48,7 @@ const Register = () => {
         <div className="line"></div>
         <h2 className="section-title">Tus datos</h2>
         
-        <form onSubmit={(e)=>handleSubmition(e)} className="tutor__form" action="">
+        <form method="POST" onSubmit={(e)=>handleSubmition(e)} className="tutor__form" action="">
           
           <label htmlFor="">Correo electrónico:</label>
           <input onChange={(e) => handleChange(e)} name="email" type="email" required/>
@@ -40,14 +59,12 @@ const Register = () => {
           <Link to="/recoverpassword">
             <p className="bold">¿Olvidaste tu contraseña?</p>
           </Link>
-          <Link to="/curso">
-            <button className="button button--primary">Entrar</button>
-          </Link>
-        
+
+          <button className="button button--primary">Entrar</button>
         </form>
       </section>
     </div>
   );
 };
 
-export default Register;
+export default Login;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import NotificationCenter from '../components/NotificationCenter';
 import AsignaturaCard from '../components/AsignaturaCard';
 import SelectArrow from '../icons/SelectArrow';
@@ -6,7 +6,8 @@ import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { SINGLE_COURSE } from '../gql/query';
-
+import { UserContext } from '../UserContext';
+ 
 const Curso = props => {
   const testsResults = [
     {
@@ -76,6 +77,9 @@ const Curso = props => {
       ]
     }
   }
+
+  const { user } = useContext(UserContext);
+  console.log(user);
 
   const { data, loading, error } = useQuery(SINGLE_COURSE, {
     variables: { id: props.match.params.id },

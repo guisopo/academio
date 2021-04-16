@@ -16,7 +16,9 @@ export const Routes = () => (
   <BrowserRouter>
     <ScrollToTop>
       <div className="App">
+
         <Header/>
+
         <main className="main">
           <Switch>
             <Route path="/" exact component={Home} />
