@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link, Redirect } from 'react-router-dom';
 import { SIGN_IN } from '../gql/mutation';
@@ -31,7 +31,7 @@ const Login = () => {
     setUserInput({[name]: newValue});
   }
 
-  const handleSubmition = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     await signIn({ variables: userInput });
   }
@@ -48,13 +48,13 @@ const Login = () => {
         <div className="line"></div>
         <h2 className="section-title">Tus datos</h2>
         
-        <form method="POST" onSubmit={(e)=>handleSubmition(e)} className="tutor__form" action="">
+        <form method="POST" onSubmit={handleSubmit} className="tutor__form" action="">
           
           <label htmlFor="">Correo electrónico:</label>
-          <input onChange={(e) => handleChange(e)} name="email" type="email" required/>
+          <input onChange={handleChange} name="email" type="email" required/>
           
           <label htmlFor="">Contraseña:</label>
-          <input onChange={(e) => handleChange(e)} name="password" type="password" required/>
+          <input onChange={handleChange} name="password" type="password" required/>
           
           <Link to="/recoverpassword">
             <p className="bold">¿Olvidaste tu contraseña?</p>

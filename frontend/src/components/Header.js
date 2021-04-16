@@ -19,11 +19,11 @@ const Header = () => {
       <div className="container">
         <a className="logo" href="/">academio</a>
         <div onClick={(e) => handleClick(e)} className="hamburger-menu">
-          <a className="nav-toggle" href="#" title="Toggle Menu">
+          <div className="nav-toggle" href="#" title="Toggle Menu">
             <span></span>
             <span></span>
             <span></span>
-          </a>
+          </div>
         </div>
         <nav>
           <ul>

@@ -1,10 +1,19 @@
+import { useApolloClient } from '@apollo/client';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../UserContext';
 
-const NavMobile = ({ handleClick, handleRoute }) => {
-  const { user } = useContext(UserContext);
 
+const NavMobile = ({ handleClick, handleRoute }) => {
+  const { user, setUser } = useContext(UserContext);
+  const client = useApolloClient();
+  
+  const handleLogOut = (e) => {
+    setUser(null);
+    localStorage.clear();
+    client.resetStore()
+    handleRoute(e);
+  }
   return (
     <div className="nav-menu nav-menu--mobile">
       <div className="nav-menu__background"></div>
@@ -37,15 +46,15 @@ const NavMobile = ({ handleClick, handleRoute }) => {
           !user
             ?
               <>
-                <Link onClick={(e) => handleRoute(e)} to="/register">
+                <Link onClick={handleRoute} to="/register">
                   <li>Regístrate</li>
                 </Link>
-                <Link onClick={(e) => handleRoute(e)} to="/login">
+                <Link onClick={handleRoute} to="/login">
                   <li>Incia sesión</li>
                 </Link>
               </>
             : 
-              <Link onClick={(e) => handleRoute(e)} to="/">
+              <Link onClick={handleLogOut} to="/">
                 <li>Cierra sesión</li>
               </Link>
         }

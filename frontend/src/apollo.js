@@ -1,10 +1,22 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from 'apollo-link-context'
 
 const cache = new InMemoryCache();
-const link = new HttpLink({ uri: 'http://localhost:4000/graphql' })
+const link = new HttpLink({ uri: 'http://localhost:4000/graphql' });
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('academio-user-token')
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `bearer ${token}` : null,
+    }
+  }
+})
 
 export const client = new ApolloClient({
-  link,
+  link: authLink.concat(link),
   cache,
   connectToDevTools: true
 });

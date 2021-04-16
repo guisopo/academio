@@ -46,4 +46,12 @@ const SINGLE_SUBJECT = gql`
 }
 `;
 
-export { ALL_COURSES, SINGLE_COURSE, SINGLE_SUBJECT };
+const ME = gql`
+  query ME {
+    me {
+      firsName
+    }
+  }
+`;
+
+export { ALL_COURSES, SINGLE_COURSE, SINGLE_SUBJECT, ME };
