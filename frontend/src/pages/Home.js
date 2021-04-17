@@ -11,7 +11,6 @@ import cardImage2 from '../images/sanidad.jpg';
 import avatarImage1 from '../images/avatar1.jpg';
 
 const Home = () => {
-
   return (
     <>
       <section className="hero-section">

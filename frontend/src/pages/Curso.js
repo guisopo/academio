@@ -80,8 +80,7 @@ const Curso = props => {
 
   const { user } = useContext(UserContext);
 
-  const {data: userData, loading: userLoading, error: userError } = useQuery(ME);
-
+  const {data: currentUserData, loading: currentUserLoading, error: currentUserError } = useQuery(ME);
 
   const { data: courseData, loading: courseLoading, error: courseError } = useQuery(SINGLE_COURSE, {
     variables: { id: props.match.params.id },
@@ -91,15 +90,19 @@ const Curso = props => {
   chartData.datasets[0].data = testsResults.map(test => test.result);
 
 
-  if(courseLoading || userLoading) return <p>Loaging...</p>
-  if(courseError) return <p>There was an error.</p>
+  if(courseLoading || currentUserLoading) return <p>Loaging...</p>
+  if(courseError || currentUserError) return <p>There was an error.</p>
 
   const { title, convocation, subjects } = courseData.singleCourse;
   const { officialTestDate, bulletinLink } = convocation;
   const date = new Date(officialTestDate);
   let dateOptions = { month: 'long'};
 
-  console.log(userData);
+  const { enrolledCourses } = currentUserData.me;
+  
+  console.log('me: ', enrolledCourses[0].title === title);
+
+  if(enrolledCourses[0].title !== title) return <p>Sorry, you are not enrolled in this course.</p>;
 
   return (
     <div id="curso">
@@ -130,7 +133,7 @@ const Curso = props => {
               <AsignaturaCard
                 key={subject.id}
                 id={subject.id}
-                title={subject.title} 
+                title={subject.title}
               />
             )
           }

@@ -1,13 +1,28 @@
 import { gql } from '@apollo/client';
 
 const ALL_COURSES = gql`
-  query {
+  query ALL_COURSES {
     allCourses {
       id
       title
       area
       convocation {
         organization
+      }
+    }
+  }
+`;
+
+const ME = gql`
+  query ME {
+    me {
+      firstName
+      enrolledCourses {
+        title
+      }
+      testScores {
+        title
+        scores
       }
     }
   }
@@ -44,14 +59,6 @@ const SINGLE_SUBJECT = gql`
     }
   }
 }
-`;
-
-const ME = gql`
-  query ME {
-    me {
-      firsName
-    }
-  }
 `;
 
 export { ALL_COURSES, SINGLE_COURSE, SINGLE_SUBJECT, ME };
