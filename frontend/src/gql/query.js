@@ -18,6 +18,7 @@ const ME = gql`
     me {
       firstName
       enrolledCourses {
+        id
         title
       }
       testScores {
@@ -28,8 +29,8 @@ const ME = gql`
   }
 `;
 
-const SINGLE_COURSE = gql`
-  query SINGLE_COURSE($id: ID!) {
+const SINGLE_COURSE_ENROLLED = gql`
+  query SINGLE_COURSE_ENROLLED($id: ID!) {
     singleCourse( id: $id ) {
       id
       title
@@ -48,6 +49,24 @@ const SINGLE_COURSE = gql`
   }
 `;
 
+const SINGLE_COURSE_INFO = gql`
+  query SINGLE_COURSE_INFO($id: ID!) {
+    singleCourse( id: $id ) {
+      id
+      title
+      area
+      convocation {
+        officialTestDate
+        bulletinLink
+      }
+      subjects {
+        title
+        description
+      }
+    }
+  }
+`;
+
 const SINGLE_SUBJECT = gql`
   query SINGLE_SUBJECT($id: ID!) {
   singleSubject(id: $id) {
@@ -61,4 +80,4 @@ const SINGLE_SUBJECT = gql`
 }
 `;
 
-export { ALL_COURSES, SINGLE_COURSE, SINGLE_SUBJECT, ME };
+export { ALL_COURSES, SINGLE_COURSE_ENROLLED, SINGLE_COURSE_INFO, SINGLE_SUBJECT, ME };

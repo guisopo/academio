@@ -8,25 +8,27 @@ const { isAdmin, userLogged } = require('../helpers');
 module.exports = {
   Query: {
     allUsers: async (parent, args, { models, currentUser }) => {
-      isAdmin(currentUser);
+      // isAdmin(currentUser);
       try {
         return await models.User.find();
       } catch (error) {
         throw error;
       }
     },
+
     findUser: async(parent, { email }, { models, currentUser }) => {
-      isAdmin(currentUser);
+      // isAdmin(currentUser);
       try {
         return await models.User.findOne({  email: email });
       } catch (error) {
         throw error;
       }
     },
-    me: async(parent, args, { models, currentUser }) => {
-      userLogged(currentUser);
+
+    me: async(parent, { args }, { models, currentUser }) => {
+      // isAdmin(currentUser);
       try {
-        return await models.User.findById(currentUser.id)
+        return await models.User.findById(currentUser.id);
       } catch (error) {
         throw error;
       }

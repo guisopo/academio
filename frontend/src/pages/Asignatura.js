@@ -7,15 +7,14 @@ import TutorAvatar from '../images/avatar-profe.jpg';
 import { useQuery } from '@apollo/client';
 import { SINGLE_SUBJECT } from '../gql/query';
 
-const Asignatura = (props) => {
-
+const Asignatura = ({ match}) => {
   const tutor = {
     name: 'M.J. Morant',
     avatar: TutorAvatar
   }
 
   const { data, loading, error } = useQuery(SINGLE_SUBJECT, {
-    variables: { id: props.match.params.id }
+    variables: { id: match.params.id }
   });
 
   if(loading) return <p>Loaging...</p>
