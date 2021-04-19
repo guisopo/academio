@@ -37,7 +37,7 @@ const CursoNotEnrolled = ({ courseId }) => {
 
         <ul className="information__list">
           <li className="information__item">La convocatoria para tus oposiciones es el {date.getDate()} de {new Intl.DateTimeFormat('es-ES', dateOptions).format(date)} de {date.getFullYear()}</li>
-          <li className="information__item">Consulta el BOE en este <a href={bulletinLink}>enlace</a> para conocer todos los detalles.</li>
+          <li className="information__item">Consulta el BOE en este <a className="bold" href={bulletinLink}>enlace</a> para conocer todos los detalles.</li>
         </ul>
       </section>
 

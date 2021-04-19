@@ -21,9 +21,12 @@ const ME = gql`
         id
         title
       }
-      testScores {
+      testsScores {
         title
-        scores
+        scores {
+          score
+          date
+        }
       }
     }
   }

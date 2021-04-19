@@ -2,13 +2,20 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const autoPopulate = require('mongoose-autopopulate');
 
-const testScoresSchema = {
+const testsScoresSchema = {
   title: {
     type: String
   },
-  scores: [{
-    type: Number
-  }]
+  scores: [
+    {
+      score: {
+        type: Number
+      },
+      date: {
+        type: String
+      }
+    }
+  ]
 };
 
 const userSchema = new mongoose.Schema({
@@ -54,7 +61,7 @@ const userSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
     }
   ],
-  testScores: [testScoresSchema]
+  testsScores: [testsScoresSchema]
 },
 {
   // Assigns createAt and updatedAt fields with a Date type

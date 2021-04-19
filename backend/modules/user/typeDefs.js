@@ -1,9 +1,14 @@
 const { gql } = require('apollo-server');
 
 module.exports = gql`
-  type TestScore {
-    title: String,
-    scores: [Int]
+  type Score {
+    score: Int
+    date: String
+  }
+
+  type TestsScores {
+    title: String
+    scores: [Score]
   }
 
   type User {
@@ -14,7 +19,7 @@ module.exports = gql`
     password: String!
     avatar: String
     role: String!
-    testScores: [TestScore]
+    testsScores: [TestsScores]
     completedTopics: [ID!]
     createdAt: DateTime!
     updatedAt: DateTime!
@@ -51,7 +56,7 @@ module.exports = gql`
     password: String
     role: String
     enrolledCourses: [ID!]
-    testScores: TestScoreInput
+    testsScores: TestScoreInput
   }
 
   type Query {

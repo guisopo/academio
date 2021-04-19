@@ -118,14 +118,16 @@ module.exports = {
         // Find current user in DB
         const user = await models.User.findById(currentUser.id);
         // Grab curren user test scores field
-        const testToUpdate = user.testScores.find((test) => test.title === testTitle);
+        const testToUpdate = user.testsScores.find((test) => test.title === testTitle);
+        const [date, month]    = new Date().toLocaleDateString("en-US").split("/")
+
         // If user doesn't have this test in its profile
         if(!testToUpdate) {
-          // Add to it's
-          user.testScores = user.testScores.concat({title: testTitle, scores: userScore});
+          // Add to it's profile
+          user.testsScores = user.testsScores.concat({title: testTitle, scores: [{ score: userScore, date: `${date}-${month}` }]});
         } else {
           // Add new score to scores array
-          testToUpdate.scores = testToUpdate.scores.concat(userScore);
+          testToUpdate.scores = testToUpdate.scores.concat({ score: userScore, date: `${date}-${month}` });
         }
         // Update user in DB
         return await user.save();

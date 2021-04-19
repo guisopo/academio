@@ -33,7 +33,7 @@ const NavMobile = ({ handleClick, handleRoute }) => {
           <li>Cursos</li>
         </Link>
         <li>
-          Quienes somos
+          Quiénes somos
         </li>
         <li>
           Blog

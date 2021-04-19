@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import NotificationCenter from '../components/NotificationCenter';
 import AsignaturaCard from '../components/AsignaturaCard';
 import SelectArrow from '../icons/SelectArrow';
@@ -6,38 +6,17 @@ import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { SINGLE_COURSE_ENROLLED } from '../gql/query';
-import { UserContext } from '../UserContext';
  
 const CursoEnrolled = ({ userData, courseId }) => {
-  const testsResults = [
-    {
-      date: '10 FEB',
-      result: 73
-    },
-    {
-      date: '22 FEB',
-      result: 87
-    },
-    {
-      date: '1 MAR',
-      result: 77
-    },
-    {
-      date: '9 MAR',
-      result: 90
-    },
-    {
-      date: '16 MAR',
-      result: 86
-    },
-  ];
+  const [currentTest, setCurrentTest] = useState('Simulacro oposición');
+  const [currentTestData, setCurrentTestData] = useState([]);
 
   const chartData = {
-    labels: [],
+    labels: currentTestData.scores?.slice(-10).map(result => result.date),
     datasets: [
       {
-        label: 'Últimos 5',
-        data: [],
+        label: `Tus últimos resultados de: ${currentTestData?.title}`,
+        data: currentTestData?.scores?.slice(-10).map(result => result.score),
         fill: '#fffff',
         backgroundColor: '#16A413',
         borderColor: '#16A413',
@@ -78,21 +57,25 @@ const CursoEnrolled = ({ userData, courseId }) => {
     }
   }
 
-  const { user } = useContext(UserContext);
+  useEffect(() => {
+    const test = userData.me.testsScores.find(test => test.title === currentTest);
+    if(test) setCurrentTestData(test);
+  }, [currentTest, userData.me.testsScores]);
 
   const { data: courseData, loading: courseLoading, error: courseError } = useQuery(SINGLE_COURSE_ENROLLED, {
     variables: { id: courseId },
   });
 
-  chartData.labels = testsResults.map(test => test.date);
-  chartData.datasets[0].data = testsResults.map(test => test.result);
-
+  const handleTestSelect = (e) => {
+    setCurrentTest(e.target.value);
+  }
+  
   if(courseLoading) return <p>Loaging...</p>
   if(courseError) return <p>There was an error:</p>
 
-
-  const { title, convocation, subjects } = courseData.singleCourse;
+  const { title, convocation, subjects, quizzes } = courseData.singleCourse;
   const { officialTestDate, bulletinLink } = convocation;
+
   const date = new Date(officialTestDate);
   let dateOptions = { month: 'long'};
 
@@ -106,7 +89,7 @@ const CursoEnrolled = ({ userData, courseId }) => {
 
         <ul className="information__list">
           <li className="information__item">La convocatoria para tus oposiciones es el {date.getDate()} de {new Intl.DateTimeFormat('es-ES', dateOptions).format(date)} de {date.getFullYear()}</li>
-          <li className="information__item">Consulta el BOE en este <a href={bulletinLink}>enlace</a> para conocer todos los detalles.</li>
+          <li className="information__item">Consulta el BOE en este <a className="bold" href={bulletinLink}>enlace</a> para conocer todos los detalles.</li>
         </ul>
       </section>
 
@@ -139,13 +122,17 @@ const CursoEnrolled = ({ userData, courseId }) => {
           <Line data={chartData} options={chartOptions} />
         </div>
 
-        <div className="filter-container">
-          <label>Realizar test:</label>
+        <div className="filter-container">  
+          <label>Selecciona el tipo de test para ver tu progresión o realizar una nueva prueba:</label>
           <div className="select-container">
-            <select name="tipo" id="tipo-select">
-              <option value="">Selecciona tipo test</option>
-              <option value="asignatura1">Parcial Derecho Civil y Mercantil. Economía</option>
-              <option value="simulacro">Simulacro oposición</option>
+            <select name="tipo" id="tipo-select" defaultValue="Simulacro oposición" onChange={handleTestSelect}>
+              {
+                quizzes.map(quizz => <option value={quizz.name}>{quizz.name}</option> )
+              }
+              <option value="Simulacro oposición">Simulacro oposición</option>
+              <option value="Parcial 1">Parcial Derecho Civil y Mercantil. Economía</option>
+              <option value="Parcial 2">Parcial 2</option>
+              <option value="Parcial 3">Parcial 3</option>
             </select>
             <SelectArrow/>
           </div>

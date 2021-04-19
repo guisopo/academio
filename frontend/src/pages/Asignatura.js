@@ -24,7 +24,7 @@ const Asignatura = ({ match}) => {
 
   return (
     <div>
-      <Breadcrum parent={'Agentes de hacienda pública'} child={'Derecho civil y mercantil. Economía'}/>
+      <Breadcrum parent={'Agentes de hacienda pública'} current={title}/>
       <h1 className="main-title main-title--BC">{title}</h1>
 
       <section>
