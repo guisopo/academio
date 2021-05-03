@@ -9,7 +9,7 @@ const Cursos = () => {
   const [coursesAreas, setCoursesAreas] = useState([]);
 
   const { data, loading, error } = useQuery(ALL_COURSES);
-  
+  console.log(data);
   if(loading) return <p>Loading...</p>;
   if(error) return <p>There was an error.</p>;
 

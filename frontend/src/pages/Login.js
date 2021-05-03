@@ -6,6 +6,7 @@ import { UserContext } from '../UserContext';
 
 const Login = () => {
   const { user, setUser } = useContext(UserContext);
+
   const [userInput, setUserInput] = useReducer(
     (state, newState) => ({...state, ...newState}),
     {
@@ -23,7 +24,7 @@ const Login = () => {
     }
   }
 
-  useEffect(handleMutation, [data]);
+  useEffect(handleMutation, [data, setUser]);
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -51,10 +52,22 @@ const Login = () => {
         <form method="POST" onSubmit={handleSubmit} className="tutor__form" action="">
           
           <label htmlFor="">Correo electrónico:</label>
-          <input onChange={handleChange} name="email" type="email" required/>
+          <input 
+            value={userInput.email}
+            onChange={handleChange}
+            name="email"
+            type="email"
+            required
+          />
           
           <label htmlFor="">Contraseña:</label>
-          <input onChange={handleChange} name="password" type="password" required/>
+          <input 
+            value={userInput.password}
+            onChange={handleChange} 
+            name="password" 
+            type="password" 
+            required
+          />
           
           <Link to="/recoverpassword">
             <p className="bold">¿Olvidaste tu contraseña?</p>
