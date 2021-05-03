@@ -65,7 +65,7 @@ module.exports = {
       // Normalize email address
       email = email.trim().toLowerCase();
       // Find user
-      const user = await models.User.findOne({ email: email });
+      const user = await models.User.findOne({ email });
       if(!user) throw new Error(`The email address that you've entered doesn't match any account.`);
       // Compare password
       const passwordCorrect = await bcrypt.compare(password, user.password);
