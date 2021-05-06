@@ -8,7 +8,7 @@ const database = require('./database');
 
 const app = express();
 // CORS middleware
-app.use(cors())
+app.use(cors());
 
 // Connect to the database
 database.connect(process.env.MONGODB_URI);
@@ -21,13 +21,13 @@ const server = new ApolloServer({
     require('./modules/subject'),
     require('./modules/quiz'),
   ],
-  context: async ({ req }) => {
+  context: async ({ req, res }) => {
     // Get user token from headers
     const token = req.headers.authorization || '';
     // Try to retrieve a user with the token
     const currentUser = auth(token, process.env.JWT_SECRET);
     // add the db models to the context
-    return { models, currentUser };
+    return { models, currentUser, res };
   }
 });
 

@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { AuthenticationError, ForbiddenError } = require('apollo-server-express');
 require('dotenv').config();
 const mongoose = require('mongoose');
-const { isAdmin, userLogged } = require('../helpers');
+const { isAdmin, userLogged, createAccessToken, createRefreshToken } = require('../helpers');
 
 module.exports = {
   Query: {
@@ -61,7 +61,7 @@ module.exports = {
       }
     },
 
-    signIn: async (parent, { email, password }, { models }) => {
+    signIn: async (parent, { email, password }, { models,res }) => {
       // Normalize email address
       email = email.trim().toLowerCase();
       // Find user
@@ -70,10 +70,9 @@ module.exports = {
       // Compare password
       const passwordCorrect = await bcrypt.compare(password, user.password);
       if(!passwordCorrect) throw new Error(`Incorrect password.`);
-      // Get json web token
-      const token = jwt.sign({ id: user.id, email: user.email, role: user.role}, process.env.JWT_SECRET, { expiresIn: '7d' });
-
-      return { id: user.id, role: user.role, token: token, tokenExpiration: 1};
+      // Login Successful
+      res.cookie('acaid', createRefreshToken(user), { httpOnly: true});
+      return { id: user.id, role: user.role, token: createAccessToken(user), tokenExpiration: 1};
     },
 
     updateUser: async (parent, { userId, args }, { models, currentUser }) => {
